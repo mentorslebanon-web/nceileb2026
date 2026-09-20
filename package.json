@@ -36,7 +36,6 @@ import {
   Terminal,
   HelpCircle
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
 import { AiCourseItem, AiCourseModule } from '../types';
 
 interface AiCourseDetailViewProps {
@@ -449,55 +448,50 @@ export const AiCourseDetailView: React.FC<AiCourseDetailViewProps> = ({
                     </button>
 
                     {/* Accordion Collapsible Body */}
-                    <AnimatePresence initial={false}>
-                      {isExpanded && (
-                        <motion.div
-                          id={`accordion-body-module-${mod.moduleNumber}`}
-                          key="content"
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.22, ease: 'easeInOut' }}
-                          className="overflow-hidden"
-                        >
-                          <div className="px-5 sm:px-6 pb-5 sm:pb-6 pt-2 border-t border-slate-100 space-y-4">
-                            {/* Core Topics Covered */}
-                            <div className="space-y-2">
-                              <h4 className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-500">
-                                Core Topics & Frameworks Covered:
-                              </h4>
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs sm:text-sm text-slate-700">
-                                {mod.topics.map((topic, tIdx) => (
-                                  <div key={tIdx} className="flex items-start space-x-2 bg-slate-50/80 p-2.5 rounded-xl border border-slate-200/70">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 mt-1.5 shrink-0" />
-                                    <span className="leading-snug">{topic}</span>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-
-                            {/* Hands-On Lab and Deliverable Cards */}
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 pt-1">
-                              <div className="p-3.5 rounded-xl bg-amber-50/70 border border-amber-200 text-xs text-amber-950 space-y-1">
-                                <div className="flex items-center space-x-1.5 font-bold font-mono text-[11px] uppercase tracking-wider text-amber-900">
-                                  <Wrench className="w-3.5 h-3.5 text-amber-700" />
-                                  <span>Hands-On Lab & Practical Exercise:</span>
+                    <div
+                      id={`accordion-body-module-${mod.moduleNumber}`}
+                      className={`grid transition-all duration-200 ease-in-out ${
+                        isExpanded ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0 pointer-events-none'
+                      }`}
+                    >
+                      <div className="overflow-hidden">
+                        <div className="px-5 sm:px-6 pb-5 sm:pb-6 pt-2 border-t border-slate-100 space-y-4">
+                          {/* Core Topics Covered */}
+                          <div className="space-y-2">
+                            <h4 className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-500">
+                              Core Topics & Frameworks Covered:
+                            </h4>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs sm:text-sm text-slate-700">
+                              {mod.topics.map((topic, tIdx) => (
+                                <div key={tIdx} className="flex items-start space-x-2 bg-slate-50/80 p-2.5 rounded-xl border border-slate-200/70">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 mt-1.5 shrink-0" />
+                                  <span className="leading-snug">{topic}</span>
                                 </div>
-                                <p className="leading-relaxed pl-5 text-amber-900/90">{mod.handsOnLab}</p>
-                              </div>
-
-                              <div className="p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-200 text-xs text-emerald-950 space-y-1">
-                                <div className="flex items-center space-x-1.5 font-bold font-mono text-[11px] uppercase tracking-wider text-emerald-900">
-                                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700" />
-                                  <span>Founder Deliverable:</span>
-                                </div>
-                                <p className="leading-relaxed pl-5 font-semibold text-emerald-900">{mod.founderDeliverable}</p>
-                              </div>
+                              ))}
                             </div>
                           </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+
+                          {/* Hands-On Lab and Deliverable Cards */}
+                          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 pt-1">
+                            <div className="p-3.5 rounded-xl bg-amber-50/70 border border-amber-200 text-xs text-amber-950 space-y-1">
+                              <div className="flex items-center space-x-1.5 font-bold font-mono text-[11px] uppercase tracking-wider text-amber-900">
+                                <Wrench className="w-3.5 h-3.5 text-amber-700" />
+                                <span>Hands-On Lab & Practical Exercise:</span>
+                              </div>
+                              <p className="leading-relaxed pl-5 text-amber-900/90">{mod.handsOnLab}</p>
+                            </div>
+
+                            <div className="p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-200 text-xs text-emerald-950 space-y-1">
+                              <div className="flex items-center space-x-1.5 font-bold font-mono text-[11px] uppercase tracking-wider text-emerald-900">
+                                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700" />
+                                <span>Founder Deliverable:</span>
+                              </div>
+                              <p className="leading-relaxed pl-5 font-semibold text-emerald-900">{mod.founderDeliverable}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 );
               })
